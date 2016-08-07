@@ -1,0 +1,28 @@
+version: '2'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8686:80"
+        volumes:
+            - ./../code:/code
+            - ./site.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php
+    db:
+        image: mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: evernote_schedule
+            MYSQL_USER: ev_sch
+            MYSQL_PASSWORD: ev_sch
+    php:
+        image: php:7-fpm
+        volumes:
+            - ./../code:/code
+        expose:
+            - "9000"
+        links:
+            - db
