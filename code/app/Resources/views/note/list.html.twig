@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for note in notes %}
+        <p>{{ note.id }}: {{ note.title }}</p>
+        <p>created at: {{ note.createdAt | date("Y-m-d H:i:s") }}, remind at: {{ note.remindAt | date("Y-m-d H:i:s") }}</p>
+        <p>{{ note.content }}</p>
+    {% endfor %}
+{% endblock %}
