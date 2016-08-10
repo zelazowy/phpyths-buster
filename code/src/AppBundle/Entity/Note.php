@@ -32,7 +32,7 @@ class Note
     /**
      * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -42,7 +42,7 @@ class Note
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId($id) : Note
     {
         $this->id = $id;
 
@@ -52,7 +52,7 @@ class Note
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -62,7 +62,7 @@ class Note
      *
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle($title) : Note
     {
         $this->title = $title;
 
@@ -72,7 +72,7 @@ class Note
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent() : string
     {
         return $this->content;
     }
@@ -82,7 +82,7 @@ class Note
      *
      * @return $this
      */
-    public function setContent($content)
+    public function setContent($content) : Note
     {
         $this->content = $content;
 
@@ -92,7 +92,7 @@ class Note
     /**
      * @return \DateTime
      */
-    public function getRemindAt()
+    public function getRemindAt() : \DateTime
     {
         return $this->remindAt;
     }
@@ -102,7 +102,7 @@ class Note
      *
      * @return $this
      */
-    public function setRemindAt($remindAt)
+    public function setRemindAt($remindAt) : Note
     {
         $this->remindAt = $remindAt;
 
@@ -112,7 +112,7 @@ class Note
     /**
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt() : \DateTime
     {
         return $this->createdAt;
     }
@@ -122,7 +122,7 @@ class Note
      *
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt) : Note
     {
         $this->createdAt = $createdAt;
 

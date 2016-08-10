@@ -49,7 +49,7 @@ class NoteController extends Controller
 
         $note3 = new Note();
         $note3
-            ->setId(2)
+            ->setId(3)
             ->setTitle("third note")
             ->setContent("third note content")
             ->setRemindAt(new \DateTime("+2 days 12:00:00"))
