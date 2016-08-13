@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 class Note
 {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -30,19 +30,19 @@ class Note
     private $createdAt;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId() : int
+    public function getId() : string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      *
      * @return $this
      */
-    public function setId($id) : Note
+    public function setId(string $id) : Note
     {
         $this->id = $id;
 
@@ -62,7 +62,7 @@ class Note
      *
      * @return $this
      */
-    public function setTitle($title) : Note
+    public function setTitle(string $title) : Note
     {
         $this->title = $title;
 
@@ -82,7 +82,7 @@ class Note
      *
      * @return $this
      */
-    public function setContent($content) : Note
+    public function setContent(string $content) : Note
     {
         $this->content = $content;
 
@@ -102,7 +102,7 @@ class Note
      *
      * @return $this
      */
-    public function setRemindAt($remindAt) : Note
+    public function setRemindAt(\DateTime $remindAt) : Note
     {
         $this->remindAt = $remindAt;
 

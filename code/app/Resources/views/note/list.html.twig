@@ -2,8 +2,9 @@
 
 {% block body %}
     {% for note in notes %}
-        <p>{{ note.id }}: {{ note.title }}</p>
-        <p>created at: {{ note.createdAt | date("Y-m-d H:i:s") }}, remind at: {{ note.remindAt | date("Y-m-d H:i:s") }}</p>
+        <h3>{{ note.title }} <small>created at: {{ note.createdAt | date("Y-m-d H:i:s") }}</small></h3>
+        <p>id: {{ note.id }}:</p>
         <p>{{ note.content }}</p>
+        <hr>
     {% endfor %}
 {% endblock %}
