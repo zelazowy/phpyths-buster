@@ -41,25 +41,47 @@ class NoteController extends Controller
         $client = new Client($token, true);
 
         $nFilter = new NoteFilter();
-        $nFilter->order = "created";
+        $nFilter->words = "reminderTime:* -reminderDoneTime:*";
+
         $rSpec = new NotesMetadataResultSpec();
         $rSpec->includeTitle = true;
+        $rSpec->includeAttributes = true;
 
         /** @var NoteList $notesData */
         $notesData = $client->getUserNotestore()->findNotesMetadata($client->getToken(), $nFilter, 0, 50, $rSpec);
 
+        $sortedNotes = $this->sortNotes($notesData->notes);
         $notes = [];
         /** @var NoteMetadata $noteData */
-        foreach ($notesData->notes as $noteData) {
+        foreach ($sortedNotes as $noteData) {
             $note = new Note();
             $note
                 ->setId($noteData->guid)
                 ->setTitle($noteData->title)
                 ->setContent("unavailable")
-                ->setCreatedAt((new \DateTime())->setTimestamp($noteData->created));
+                ->setCreatedAt((new \DateTime())->setTimestamp($noteData->created))
+                ->setRemindAt((new \DateTime())->setTimestamp($noteData->attributes->reminderTime / 1000));
 
             $notes[] = $note;
         }
+
+        return $notes;
+    }
+
+    /**
+     * @param NoteMetadata[] $notes
+     *
+     * @return mixed
+     */
+    private function sortNotes(array $notes) : array
+    {
+        usort($notes, function($a, $b) {
+            if ($a->attributes->reminderTime == $b->attributes->reminderTime) {
+                return 0;
+            }
+
+            return $a->attributes->reminderTime > $b->attributes->reminderTime ? 1 : -1;
+        });
 
         return $notes;
     }
