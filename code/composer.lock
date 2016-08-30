@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bdae5dc5eac3e3106569686f5ecd3bcb",
-    "content-hash": "58c2db4d97797fc2494516a483e992ae",
+    "hash": "9a33b36ea5a14ca0d537d3f0742e47d5",
+    "content-hash": "1de7adf89df550739d6b050d369b01f0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -780,13 +780,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zelazowy/evernote-cloud-sdk-php.git",
-                "reference": "bb2c39bc2d77c3a731157cd896dcb66d2bfb32aa"
+                "url": "https://github.com/evernote/evernote-cloud-sdk-php.git",
+                "reference": "db0c40d0e2db5c406015bfa1822f2a04af6d03ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zelazowy/evernote-cloud-sdk-php/zipball/bb2c39bc2d77c3a731157cd896dcb66d2bfb32aa",
-                "reference": "bb2c39bc2d77c3a731157cd896dcb66d2bfb32aa",
+                "url": "https://api.github.com/repos/evernote/evernote-cloud-sdk-php/zipball/db0c40d0e2db5c406015bfa1822f2a04af6d03ef",
+                "reference": "db0c40d0e2db5c406015bfa1822f2a04af6d03ef",
                 "shasum": ""
             },
             "require": {
@@ -805,6 +805,7 @@
                     "src/EDAM"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -823,12 +824,7 @@
                 "evernote",
                 "sdk"
             ],
-            "support": {
-                "issues": "https://github.com/evernote/evernote-cloud-sdk-php/issues",
-                "forum": "https://discussion.evernote.com/forum/61-evernote-for-developers/",
-                "source": "https://github.com/zelazowy/evernote-cloud-sdk-php/tree/master"
-            },
-            "time": "2016-06-15 17:48:26"
+            "time": "2016-08-19 03:44:08"
         },
         {
             "name": "ezyang/htmlpurifier",
