@@ -2,9 +2,21 @@
 
 {% block body %}
     {% for note in notes %}
-        <h3>{{ note.title }} <small>reminder: {{ note.remindAt | date("Y-m-d H:i:s") }}</small></h3>
-        <p>id: {{ note.id }}</p>
-        <p>{{ note.content }}</p>
+        <h3>{{ note.title }} <small>reminder: {{ (note.attributes.reminderTime / 1000) | date("Y-m-d H:i:s") }}</small></h3>
+        <p>id: {{ note.guid }}</p>
+        <div>
+            <div>
+                <form action="{{ url("note_done") }}" method="post">
+                    <input type="hidden" name="id" value="{{ note.guid }}"/>
+                    <input type="hidden" name="_token" value="{{ csrf_token(note.guid) }}"/>
+                    <input type="submit" value="done" />
+                </form>
+            </div>
+        </div>
         <hr>
     {% endfor %}
+    <hr>
+    {{ form_start(noteForm, { "action": url("new_reminder") }) }}
+
+    {{ form(noteForm) }}
 {% endblock %}
