@@ -46,7 +46,7 @@ class TagConverterCommand extends ContainerAwareCommand
     {
         $users = $this->em->getRepository(EvernoteUser::class)->findActive();
 
-        $output->writeln(sprintf("<info>found</info> %s users", count($users)));
+        $output->writeln(sprintf("found <info>%s</info> users", count($users)));
 
         foreach ($users as $user) {
             $client = new Client($user->getToken(), true);
@@ -75,42 +75,34 @@ class TagConverterCommand extends ContainerAwareCommand
                 /** @var \EDAM\Types\Note $note */
                 $note = $client->getUserNotestore()->getNote($client->getToken(), $noteData->guid, true, true, true, true);
 
-                $output->writeln(sprintf("<info>%s</info>", $note->title));
+                $output->writeln(sprintf("processing note <info>%s</info>", $note->title));
+                $output->writeln("------", OutputInterface::VERBOSITY_VERBOSE);
 
-                // remove any latin character from title when it appears after `_` sign
-                $title = preg_replace_callback(
-                    "/_(.+)\b/iu", // \b is whitespace or end of line, `u` modifier is requred for searching for unicode chars
-                    function ($matches) {
-                        return SpecialCharactersPurifier::purify($matches[0]);
-                    },
-                    $note->title
-                );
-
-                $output->write("purified title: {$title} ", OutputInterface::VERBOSITY_VERBOSE);
-
-                // find tags
                 $tagsFound = false;
-                foreach ($tags as $tid => $tag) {
-                    $output->write("searching for _{$tag} ", OutputInterface::VERBOSITY_VERBOSE);
+                $words = explode(" ", $note->title);
+                for ($i = 0; $i < count($words); $i++) {
+                    if (0 !== strpos($words[$i], "_")) {
+                        continue;
+                    }
 
-                    $title = preg_replace_callback(
-                        "/_{$tag}/i",
-                        function ($matches) use ($note, $tag, $tid, &$tagsFound, $output) {
-                            $output->write("found {$matches[0]}", OutputInterface::VERBOSITY_VERBOSE);
+                    // remove `_` from the beginning of (potential) tag
+                    // local $word variable created to avoid changing orignal word when not necessary
+                    $word = substr($words[$i], 1);
+                    $word = SpecialCharactersPurifier::purify($word);
 
-                            $note->tagGuids[] = $tid;
-                            $tagsFound = true;
+                    if (false === ($tid = array_search($word, $tags))) {
+                        continue;
+                    }
 
-                            return "";
-                        },
-                        $title
-                    );
+                    $output->writeln(sprintf("found <warning>%s</warning> tag", $word), OutputInterface::VERBOSITY_VERBOSE);
 
-                    $output->writeln("", OutputInterface::VERBOSITY_VERBOSE);
+                    $note->tagGuids[] = $tid;
+                    unset($words[$i]);
+                    $tagsFound = true;
                 }
 
-                // update note only when it contains tags in title
                 if ($tagsFound) {
+                    $title = implode(" ", $words);
                     $output->writeln(sprintf("new title: <info>%s</info>", $title), OutputInterface::VERBOSITY_VERBOSE);
 
                     $note->title = trim($title);
