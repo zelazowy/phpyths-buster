@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\EvernoteUser;
+use Doctrine\DBAL\Types\Type;
+
 /**
  * EvernoteUserRepository
  *
@@ -10,4 +13,19 @@ namespace AppBundle\Repository;
  */
 class EvernoteUserRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return EvernoteUser[]
+     */
+    public function findActive()
+    {
+        $users = $this
+            ->createQueryBuilder("u")
+            ->select("u")
+            ->where("u.tokenExpiresAt > :now")
+            ->setParameter("now", new \DateTime(), Type::DATETIME)
+            ->getQuery()
+            ->getResult();
+
+        return $users;
+    }
 }
