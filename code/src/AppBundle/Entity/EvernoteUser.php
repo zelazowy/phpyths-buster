@@ -57,6 +57,12 @@ class EvernoteUser
     private $updatedAt;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="evernoteUser")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $customer;
+
+    /**
      *
      */
     public function __construct()
@@ -192,6 +198,26 @@ class EvernoteUser
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param mixed $customer
+     *
+     * @return $this
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
     }
 }
 
